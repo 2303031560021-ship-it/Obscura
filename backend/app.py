@@ -6,7 +6,8 @@ from models import Base
 app = Flask(__name__)
 CORS(app)
 
-# Create all tables in PostgreSQL
+
+
 Base.metadata.create_all(bind=engine)
 
 @app.route("/")
