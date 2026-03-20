@@ -2,14 +2,16 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import LightRays from "@/components/LightRays";
-import { getGlobalStats } from "@/lib/api";
+import { getGlobalStats, getTrendingMovies } from "@/lib/api";
 import TypewriterText from "@/components/TypewriterText";
+
 
 export default function Home() {
   return (
     <main className="bg-black">
       <HeroSection />
       <StatsSection />
+      <TrendingSection />
     </main>
   );
 }
@@ -286,5 +288,140 @@ function StatCard({ label, value, suffix, visible, delay }) {
         {label}
       </span>
     </div>
+  );
+}
+
+// ── TRENDING SECTION ─────────────────────────
+function TrendingSection() {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    getTrendingMovies()
+      .then(res => setMovies(res.data.movies))
+      .catch(err => console.error("Trending fetch error:", err));
+  }, []);
+
+  return (
+    <section className="bg-black py-20 border-t border-white/5">
+     <div className="max-w-6xl mx-auto px-6 mb-10" style={{ paddingLeft: "48px" }}>
+        <p
+          className="text-base tracking-widest uppercase mb-3 font-bold"
+          style={{ color: "#CCFF00", fontSize: "13px", letterSpacing: "0.2em" }}
+        >
+          — Trending This Week —
+        </p>
+        <h2 className="text-4xl md:text-5xl font-black text-white">
+          Most Popular Right Now
+        </h2>
+      </div>
+
+      {/* Horizontal scroll container */}
+   <div
+        className="flex gap-4 overflow-x-auto pb-8"
+       
+  style={{
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
+    scrollSnapType: "x mandatory",
+    WebkitOverflowScrolling: "touch",
+   
+  }}
+>
+        {movies.map((movie, index) => (
+          <TrendingCard key={movie.tmdb_id} movie={movie} rank={index + 1} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+// ── TRENDING CARD ─────────────────────────────
+function TrendingCard({ movie, rank }) {
+  const posterUrl = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
+    : null;
+
+  return (
+    <Link href={`/movies/${movie.tmdb_id}`}>
+   <div
+        className="relative flex-shrink-0 cursor-pointer group"
+      style={{
+          width: "calc(22vw)",
+          marginRight: "-20px",
+          scrollSnapAlign: "start",
+          minWidth: "220px",
+          maxWidth: "280px",
+        }}
+      >
+        {/* BIG RANK NUMBER — behind poster like Netflix */}
+        <div
+          className="absolute bottom-8 left-0 font-black text-white select-none pointer-events-none"
+          style={{
+            fontSize: "clamp(80px, 12vw, 140px)",
+            lineHeight: 1,
+            WebkitTextStroke: "3px rgba(255,255,255,0.25)",
+            color: "transparent",
+            zIndex: 1,
+            left: "-10px",
+          }}
+        >
+          {rank}
+        </div>
+
+        {/* POSTER */}
+       <div
+          className="relative rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105"
+          style={{
+            width: "180px",
+            height: "270px",
+            marginLeft: "40px",
+            zIndex: 2,
+            boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+          }}
+        >
+          {posterUrl ? (
+            <img
+              src={posterUrl}
+              alt={movie.title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div
+              className="w-full h-full flex items-center justify-center text-white/20 text-xs text-center p-2"
+              style={{ backgroundColor: "#111" }}
+            >
+              {movie.title}
+            </div>
+          )}
+
+          {/* Hover overlay */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3"
+            style={{
+              background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
+            }}
+          >
+            <span
+              className="text-xs font-bold"
+              style={{ color: "#CCFF00" }}
+            >
+              ★ {Number(movie.rating).toFixed(1)}
+            </span>
+          </div>
+        </div>
+
+        {/* TITLE below poster */}
+        <div
+          className="mt-3 text-white/70 text-xs font-medium truncate"
+          style={{ marginLeft: "40px", width: "140px" }}
+        >
+          {movie.title}
+        </div>
+
+      
+
+      </div>
+    </Link>
   );
 }
