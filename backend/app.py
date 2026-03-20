@@ -4,6 +4,8 @@ from config import engine
 from models import Base
 from routes.movies import movies_bp
 from routes.directors import directors_bp
+from routes.genres import genres_bp
+
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +15,7 @@ CORS(app)
 # instead of having one massive app.py with 20+ routes
 app.register_blueprint(movies_bp)
 app.register_blueprint(directors_bp)
+app.register_blueprint(genres_bp)
 
 # Create tables if they don't exist
 Base.metadata.create_all(bind=engine)
