@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { href: "/",          label: "Home" },
@@ -12,15 +13,32 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // When user scrolls past 100px, add scrolled style
+      setScrolled(window.scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="bg-black border-b border-white/10 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-black/90 backdrop-blur-md border-b border-white/10 py-3"
+          : "bg-transparent border-b border-transparent py-5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/" className="text-xl font-bold text-white tracking-widest uppercase">
           Obscura
-          <span className="text-[#CCFF00]">.</span>
+          <span style={{ color: "#CCFF00" }}>.</span>
         </Link>
 
         {/* Nav Links */}
