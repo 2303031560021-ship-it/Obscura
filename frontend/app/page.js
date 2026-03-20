@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import LightRays from "@/components/LightRays";
-import { getGlobalStats, getTrendingMovies } from "@/lib/api";
+import { getGlobalStats, getTrendingMovies, getTopDirectors } from "@/lib/api";
 import TypewriterText from "@/components/TypewriterText";
 
 
@@ -12,6 +12,7 @@ export default function Home() {
       <HeroSection />
       <StatsSection />
       <TrendingSection />
+      <TopDirectorsSection />
     </main>
   );
 }
@@ -425,3 +426,130 @@ function TrendingCard({ movie, rank }) {
     </Link>
   );
 }
+
+// ── TOP DIRECTORS SECTION ─────────────────────
+function TopDirectorsSection() {
+  const [directors, setDirectors] = useState([]);
+
+  useEffect(() => {
+    getTopDirectors()
+      .then(res => setDirectors(res.data.directors))
+      .catch(err => console.error("Directors fetch error:", err));
+  }, []);
+
+  return (
+    <section className="bg-black py-20 border-t border-white/5">
+      <div className="max-w-6xl mx-auto px-6 mb-10">
+        <p
+          className="text-base tracking-widest uppercase mb-3 font-bold"
+          style={{ color: "#CCFF00", fontSize: "13px", letterSpacing: "0.2em" }}
+        >
+          — Hall of Fame —
+        </p>
+        <h2 className="text-4xl md:text-5xl font-black text-white">
+          Top Directors
+        </h2>
+      </div>
+
+      {/* Horizontal scroll — same as trending */}
+      <div
+        className="flex gap-4 overflow-x-auto pb-8"
+        style={{
+          paddingLeft: "200px",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {directors.map((director, index) => (
+          <DirectorCard
+            key={director.tmdb_person_id}
+            director={director}
+            rank={index + 1}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+// ── DIRECTOR CARD ─────────────────────────────
+function DirectorCard({ director, rank }) {
+  const photoUrl = director.profile_path
+    ? `https://image.tmdb.org/t/p/w185${director.profile_path}`
+    : null;
+
+  return (
+    <Link href={`/directors/${director.tmdb_person_id}`}>
+      <div
+        className="relative flex-shrink-0 cursor-pointer group flex flex-col items-center"
+       style={{
+          width: "calc(15vw)",
+          scrollSnapAlign: "start",
+          minWidth: "200px",
+          maxWidth: "240px",
+          paddingTop: "80px",
+          overflow: "visible",
+        }}
+      >
+       
+
+        {/* CIRCLE PHOTO */}
+        <div className="relative z-10">
+          <div
+            className="rounded-full overflow-hidden transition-all duration-300 group-hover:scale-105"
+            style={{
+              width: "160px",
+              height: "160px",
+              border: "2px solid rgba(255,255,255,0.1)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+            }}
+          >
+            {photoUrl ? (
+              <img
+                src={photoUrl}
+                alt={director.name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div
+                className="w-full h-full flex items-center justify-center text-white/20 text-3xl font-black"
+                style={{ backgroundColor: "#111" }}
+              >
+                {director.name[0]}
+              </div>
+            )}
+          </div>
+
+          {/* Glowing ring on hover */}
+          <div
+            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              boxShadow: "0 0 25px rgba(204,255,0,0.5)",
+              border: "2px solid rgba(204,255,0,0.7)",
+            }}
+          />
+        </div>
+
+      {/* NAME */}
+        <p className="mt-4 text-white font-bold text-sm text-center truncate w-full px-2">
+          {director.name}
+        </p>
+
+        {/* RANK */}
+        <p
+          className="mt-1 text-xs font-black text-center"
+          style={{ color: "#CCFF00" }}
+        >
+          #{rank}
+        </p>
+
+      
+
+     
+
+      </div>
+    </Link>
+  );}
