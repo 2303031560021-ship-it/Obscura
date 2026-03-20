@@ -13,6 +13,8 @@ export default function Home() {
       <StatsSection />
       <TrendingSection />
       <TopDirectorsSection />
+      <CTASection />
+      <Footer />
     </main>
   );
 }
@@ -553,3 +555,131 @@ function DirectorCard({ director, rank }) {
       </div>
     </Link>
   );}
+  // ── CTA SECTION ───────────────────────────────
+function CTASection() {
+  return (
+    <section
+      className="bg-black py-40 border-t border-white/5 flex items-center justify-center text-center px-6"
+      style={{ minHeight: "60vh" }}
+    >
+      <div className="max-w-4xl mx-auto">
+
+        <p
+          className="text-base tracking-widest uppercase mb-8 font-bold"
+          style={{ color: "#CCFF00", fontSize: "13px", letterSpacing: "0.2em" }}
+        >
+          — The data is waiting —
+        </p>
+
+        <h2
+          className="font-black text-white uppercase tracking-tight leading-none mb-10"
+          style={{ fontSize: "clamp(48px, 10vw, 120px)" }}
+        >
+          Ready to see cinema differently?
+        </h2>
+
+        <p className="text-white/30 text-lg max-w-xl mx-auto mb-12 leading-relaxed">
+          5,000+ films. 3,000+ directors. One platform built on real data.
+          Stop watching. Start analysing.
+        </p>
+
+        <div className="flex items-center justify-center gap-4">
+          <Link
+            href="/movies"
+            className="px-10 py-4 font-black text-black rounded-full text-lg transition-all duration-200 hover:scale-105 hover:brightness-110"
+            style={{ backgroundColor: "#CCFF00" }}
+          >
+            Start Exploring
+          </Link>
+          <Link
+            href="/directors"
+            className="px-10 py-4 font-semibold text-white/60 border border-white/20 rounded-full text-lg hover:border-white/50 hover:text-white transition-all duration-200"
+          >
+            View Directors
+          </Link>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+
+// ── FOOTER ────────────────────────────────────
+function Footer() {
+  return (
+    <footer className="bg-black border-t border-white/5 px-6 py-16">
+      <div className="max-w-6xl mx-auto">
+
+        {/* Top row */}
+        <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
+
+          {/* Brand */}
+          <div className="max-w-xs">
+            <p className="text-2xl font-black text-white tracking-widest uppercase mb-4">
+              OBSCURA<span style={{ color: "#CCFF00" }}>.</span>
+            </p>
+            <p className="text-white/30 text-sm leading-relaxed">
+              A data analytics platform for global cinema. Built with real data,
+              real insights, and a love for film.
+            </p>
+          </div>
+
+          {/* Links */}
+          <div className="flex gap-16">
+            <div>
+              <p className="text-white/50 text-xs tracking-widest uppercase mb-4 font-semibold">
+                Explore
+              </p>
+              <div className="flex flex-col gap-3">
+                <Link href="/movies" className="text-white/40 text-sm hover:text-white transition-colors duration-200">Movies</Link>
+                <Link href="/directors" className="text-white/40 text-sm hover:text-white transition-colors duration-200">Directors</Link>
+                <Link href="/genres" className="text-white/40 text-sm hover:text-white transition-colors duration-200">Genres</Link>
+                <Link href="/global" className="text-white/40 text-sm hover:text-white transition-colors duration-200">Global Cinema</Link>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-white/50 text-xs tracking-widest uppercase mb-4 font-semibold">
+                Data
+              </p>
+              <div className="flex flex-col gap-3">
+                
+                 <a href="https://www.themoviedb.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/40 text-sm hover:text-white transition-colors duration-200"
+                >
+                  TMDB API
+                </a>
+                
+                 <a href="https://github.com/PatelRishiVishal/Obscura"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/40 text-sm hover:text-white transition-colors duration-200"
+                >
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom row */}
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-white/20 text-xs">
+            © 2026 Obscura. Built by Patel Rishi Vishal.
+          </p>
+          <p className="text-white/20 text-xs">
+            Data sourced from TMDB. Not affiliated with TMDB.
+          </p>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
+
+
+  
