@@ -4,7 +4,7 @@ import sys
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 
-load_dotenv(r"C:\Users\Rishi Patel\OneDrive\Desktop\Obscura\backend\.env")
+load_dotenv("backend/.env")
 
 import os
 DATABASE_URL = os.getenv("DATABASE_URL")
