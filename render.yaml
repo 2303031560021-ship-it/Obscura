@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: obscura-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd backend && gunicorn app:app
+    envVars:
+      - key: postgresql://obscura_db_ov7c_user:syeLH7zPQFdWHzCJILSTP8uAqIufKH0h@dpg-d81ahnjrjlhs73b0gpg0-a.singapore-postgres.render.com/obscura_db_ov7c
+        sync: false
+      - key: 0e40a5a57cac26048145c76bf3f36cd4
+        sync: false
