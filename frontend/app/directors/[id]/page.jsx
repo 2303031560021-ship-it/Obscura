@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 
-const API_BASE = "http://127.0.0.1:5000/api";
+const API_BASE = "https://obscura-backend-sued.onrender.com/api";
 
 const ratingColor = (r) => {
   if (!r) return "rgba(255,255,255,0.3)";

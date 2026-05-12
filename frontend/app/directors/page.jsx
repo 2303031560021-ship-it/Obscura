@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-const API_BASE = "http://127.0.0.1:5000/api";
+const API_BASE = "https://obscura-backend-sued.onrender.com/api";
 const LIMIT = 24;
 const CINEMA_TYPES = ["All", "Hollywood", "Bollywood", "Korean", "Japanese", "French"];
 

@@ -1,9 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://obscura-backend-sued.onrender.com",
 });
-
 // ── MOVIES ──────────────────────────────────
 export const getMovies = (params) =>
   API.get("/api/movies", { params });
