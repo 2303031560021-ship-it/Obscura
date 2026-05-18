@@ -6,6 +6,7 @@ from routes.movies import movies_bp
 from routes.directors import directors_bp
 from routes.genres import genres_bp
 from routes.global_cinema import global_cinema_bp
+from routes.predictor import predictor_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -14,6 +15,7 @@ app.register_blueprint(movies_bp)
 app.register_blueprint(directors_bp)
 app.register_blueprint(genres_bp)
 app.register_blueprint(global_cinema_bp)
+app.register_blueprint(predictor_bp)
 
 Base.metadata.create_all(bind=engine)
 
