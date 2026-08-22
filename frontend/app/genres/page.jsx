@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-const API_BASE = "https://obscura-backend-sued.onrender.com/api";
+const API_BASE = "https://obscura-backend-k2ph.onrender.com/api";
 
 // genre field = cinema industry name in this API
 const INDUSTRY_META = {

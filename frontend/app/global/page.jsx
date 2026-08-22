@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-const API_BASE = "https://obscura-backend-sued.onrender.com/api";
+const API_BASE = "https://obscura-backend-k2ph.onrender.com/api";
 
 const INDUSTRY_META = {
   Hollywood: { emoji: "🎬", color: "#CCFF00",  region: "United States", desc: "The world's largest film industry by revenue and global reach." },

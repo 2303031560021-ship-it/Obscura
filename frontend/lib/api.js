@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://obscura-backend-sued.onrender.com",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://obscura-backend-k2ph.onrender.com/api",
 });
 // ── MOVIES ──────────────────────────────────
 export const getMovies = (params) =>
